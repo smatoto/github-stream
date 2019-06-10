@@ -1,4 +1,4 @@
-# Streaming Data Excercise
+# Streaming Data Exercise
 
 
 ## Description
