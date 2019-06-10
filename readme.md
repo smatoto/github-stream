@@ -18,7 +18,7 @@ The read() function reqturns a portion of data (list of dictionaries composed of
 ## Testing the library
 1. Clone or download the repository
 2. Rename .env.sample into .env
-3. Add your Github username and [personal access token(https://help.github.com/en/enterprise/2.16/user/articles/creating-a-personal-access-token-for-the-command-line)
+3. Add your Github username and [personal access token](https://help.github.com/en/enterprise/2.16/user/articles/creating-a-personal-access-token-for-the-command-line)
 
 #### Run the following on shell while in the folder directory
 4. pip install -r requirements.txt
