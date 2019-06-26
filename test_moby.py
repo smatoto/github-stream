@@ -1,5 +1,4 @@
 # Script for testing the Github class
-import time
 from github import Github
 
 owner = "moby"
@@ -12,15 +11,10 @@ gh = Github(owner, repos, resources)
 while True:
     data = gh.read()
     if data:
-        print('Fetched {} resources'.format(len(data)))
+        print(F"Fetched {len(data)} resources")
         # Show information for each resource
         for datum in data:
-            print('Fetched {} {} from {}'.format(
-                len(datum['data']),
-                datum['resource'],
-                datum['repository']
-            ))
-            time.sleep(5)
+            print(F"Fetched {len(datum['data'])} {datum['resource']} from {datum['repository']}")
         print('End of read()')
     if data is None:
         break

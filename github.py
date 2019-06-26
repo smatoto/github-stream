@@ -1,5 +1,4 @@
 import os
-import logging
 import requests
 from dotenv import load_dotenv
 
@@ -14,7 +13,7 @@ class Github:
     # Number of data returned per page
     MAX_RESULTS = 25
 
-    # Authenticatio: required if you need to bypass the rate limiting of Github API
+    # Authentication - required to bypass the rate limiting of Github API
     USER = os.environ['GITHUB_USER']
     TOKEN = os.environ['GITHUB_TOKEN']
 
@@ -50,21 +49,14 @@ class Github:
         if endpoint['next_page_url']:
             url = endpoint['next_page_url']
         else:
-            url = '{}/repos/{}/{}/{}'.format(self.BASE_URL, self.owner, endpoint['repository'], endpoint['resource'])
+            url = F"{self.BASE_URL}/repos/{self.owner}/{endpoint['repository']}/{endpoint['resource']}"
 
         # Set request parameters and authentication headers
         params = {'per_page' : self.MAX_RESULTS }
-        headers = {'Authorization': 'token {}'.format(self.TOKEN)}
+        headers = {'Authorization': F"token {self.TOKEN}"}
         
         # Send the GET request
         response = requests.get(url, params, headers=headers)
-
-        # Display for debugging
-        # print('Index {}: Fetching {} for {}'.format(
-        #     endpoint['index'],
-        #     endpoint['resource'],
-        #     endpoint['repository'])
-        # )
 
         # Check for response status code and assign the next_page_url from Github API to the self.resource object
         if response.status_code == 200:
@@ -72,7 +64,7 @@ class Github:
             if 'next' in response.links.keys():
                 self.endpoints[endpoint['index']]['next_page_url'] = response.links['next']['url']
 
-            # Mark the endpoint as depleted if 'next' is not in the response headers            
+            # Mark the resource as depleted if 'next' is not in the response headers            
             else:
                 self.endpoints[endpoint['index']]['next_page_url'] = None
                 self.endpoints[endpoint['index']]['depleted'] = True                
@@ -106,5 +98,3 @@ class Github:
         # Else return NoneType, ending the iteration
         else:
             return None
-
-
